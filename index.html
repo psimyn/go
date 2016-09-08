@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>go</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      var turn = 'white'
+      document.addEventListener('click', function (evt) {
+        var target = evt.target
+        target.classList.add(turn)
+        turn = turn === 'black' ? 'white' : 'black'
+      })
+      function drawPiece(opts) {
+        var piece = document.createElement('button')
+        document.getElementById('app').appendChild(piece)
+      }
+
+      function drawSquare(index) {
+        var piece = document.createElement('button')
+        piece.classList.add('point')
+        return piece
+      }
+      for (var rank=0; rank < 11; rank++) {
+        drawRow(rank)
+      }
+
+      function drawRow(rank) {
+        var row = document.createElement('div')
+        row.classList = 'row'
+        for (var file=0; file < 11; file++) {
+          var square = drawSquare(rank + file)
+          row.appendChild(square)
+        }
+        document.getElementById('app').appendChild(row)
+      }
+    </script>
+
+    <style>
+      *, *:before, *:after {
+        box-sizing: border-box;
+      }
+      .point {
+        width: 48px;
+        height: 48px;
+        margin: 0;
+        position: relative;
+        border: none;
+        background: none;
+      }
+
+      .point:before {
+        content: ' ';
+        transition: opacity 0s ease;
+        width: 16px;
+        height: 16px;
+        left: 16px;
+        top: 16px;
+        opacity: 0;
+        background: #aaa;
+        border-radius: 50%;
+        border: solid 1px #bbb;
+        position: absolute;
+        z-index: 2;
+      }
+
+      .point:focus {
+        outline: none;
+      }
+
+      .point.black:before,
+      .point.white:before {
+        opacity: 1;
+        background: #333;
+        box-shadow: 0 1px 3px rgba(44, 44, 44, 0.8);
+        width: 32px;
+        height: 32px;
+        left: 8px;
+        top: 8px;
+      }
+
+      .point.white:before {
+        background: white;
+      }
+
+      .point:hover:before {
+        opacity: 1;
+      }
+
+      .point:after {
+        content: ' ';
+        border: solid 1px #888;
+        width: 48px;
+        height: 48px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+      }
+
+      .point:last-child:after {
+        border: none;
+      }
+
+      .row:last-child .point:after {
+        border: none;
+        padding: 0;
+      }
+
+      .row {
+        line-height: 0;
+        margin: 0;
+      }
+    </style>
+  </body>
+</html>
